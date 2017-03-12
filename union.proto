@@ -1,22 +1,7 @@
 syntax = "proto3";
 
-package main;
-
-enum Type {
-  FOO = 0;
-  BAR = 1;
-}
+package protounion;
 
 message TypeHeader{
-  Type type = 1;
-}
-
-message Foo{
-  Type type = 1;
-  string foo = 2;
-}
-
-message Bar{
-  Type type = 1;
-  uint32 bar = 2;
+  uint32 type = 1;
 }

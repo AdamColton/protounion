@@ -2,19 +2,25 @@ package main
 
 import (
 	"fmt"
+	"github.com/adamcolton/protounion"
 	"github.com/golang/protobuf/proto"
+)
+
+const (
+	FOO = uint32(iota)
+	BAR
 )
 
 func main() {
 	fooBuf, err := proto.Marshal(&Foo{
-		Type: Type_FOO,
+		Type: FOO,
 		Foo:  "I am a foo",
 	})
 	check(err)
 	handler(fooBuf)
 
 	barBuf, err := proto.Marshal(&Bar{
-		Type: Type_BAR,
+		Type: BAR,
 		Bar:  1234,
 	})
 	check(err)
@@ -23,15 +29,15 @@ func main() {
 
 func handler(buf []byte) {
 	// buf can be unmarshalled to TypeHeader just to check the type
-	var out TypeHeader
+	var out protounion.TypeHeader
 	err := proto.Unmarshal(buf, &out)
 	check(err)
 	switch out.Type {
-	case Type_FOO:
+	case FOO:
 		var foo Foo
 		proto.Unmarshal(buf, &foo)
 		fmt.Println("Foo:", foo.Foo)
-	case Type_BAR:
+	case BAR:
 		var bar Bar
 		proto.Unmarshal(buf, &bar)
 		fmt.Println("Bar:", bar.Bar)

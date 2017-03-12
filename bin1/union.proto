@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package main;
+
+message Foo{
+  uint32 type = 1;
+  string foo = 2;
+}
+
+message Bar{
+  uint32 type = 1;
+  uint32 bar = 3;
+}
